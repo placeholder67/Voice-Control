@@ -41,8 +41,7 @@ static void release() {
 }
 
 static float get_threshold() {
-    return (float)Mod::get()->getSettingValue<double>("threshold-db"); // user slider thing
-}
+    return (float)Mod::get()->getSettingValue<double>("threshold-db");
 
 static int find_mic_with_audio() {
     // fmod is stupid so we gotta do this manually
@@ -69,7 +68,7 @@ static int find_mic_with_audio() {
             continue;
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // yeah this is janky but works
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         unsigned int curr;
         g_fmodSystem->getRecordPosition(i, &curr);
@@ -77,11 +76,11 @@ static int find_mic_with_audio() {
 
         test_sound->release();
         if (curr > 0) {
-            return i; // first mic that actually records something
+            return i;
         }
     }
 
-    return 0; // fallback
+    return 0;// fallbackkkkkkkkkkkkkkkkkkk
 }
 
 static void mic_thread_func() {
@@ -195,8 +194,8 @@ static void mic_thread_func() {
             }
             pos = curr;
         }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1)); // dont fry cpu lol
+        // -sleep so were not burning cpu. 2ms seems like a good balance, talking from experience-, nvm going to 1ms
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
     g_fmodSystem->recordStop(g_recordDevice);
